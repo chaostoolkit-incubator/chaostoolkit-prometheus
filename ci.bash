@@ -3,7 +3,7 @@ set -eo pipefail
 
 function lint () {
     echo "Checking the code syntax"
-    pycodestyle --first chaosk8s
+    pycodestyle --first chaosprometheus
 }
 
 function build () {
