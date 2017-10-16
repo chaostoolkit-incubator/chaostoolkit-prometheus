@@ -1,0 +1,4 @@
+chaostoolkit-lib
+requests
+pycodestyle
+dateparser
