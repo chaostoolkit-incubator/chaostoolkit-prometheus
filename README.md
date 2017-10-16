@@ -64,8 +64,10 @@ You can also ask for an interval as follows:
 }
 ```
 
-In both cases, the probe returns the JSON payload as-is from Prometheus or
-raises an exception when an error is met.
+In both cases, the probe returns the [JSON payload as-is][api] from Prometheus
+or raises an exception when an error is met.
+
+[api]: https://prometheus.io/docs/querying/api/
 
 The result is not further process and should be found in the generated report
 of the experiment run.
