@@ -1,5 +1,7 @@
 # chaostoolkit-prometheus
 
+[![Build Status](https://travis-ci.org/chaostoolkit/chaostoolkit-prometheus.svg?branch=master)](https://travis-ci.org/chaostoolkit/chaostoolkit-prometheus)
+
 [Prometheus][prometheus] support for the [Chaos Toolkit][chaostoolkit].
 
 [prometheus]: https://prometheus.io/

@@ -1,0 +1,16 @@
+language: python
+
+python:
+  - 3.5
+  - 3.6
+
+install:
+  - pip install -r requirements.txt
+
+env:
+  global:
+  - PYPI_USER_NAME: "chaostoolkit"
+  - secure: "HoLXOMLZ5fXkOg0lv3imeCk0F7UmAk7RPzhCe668vRiUGws1ieN3CPYGkBKnv6fs4jJyGzC3/oPh+mG6dp2mGu/AMJ4lNTw+qweOoQ9eZdYDiTe7PbyLJVBWjiLoyJuwvbnnwZCGj+f+6Qyg1m1nWVDaI1wo4s2z1b9wEVPqWnnwl3LxScYAR2fd4ZtGdqNViuo6qCqRMMG91rdfYPoxWYCjd7CEuy+DSq1vLWBh0WROkDAvsSP93PVA+rk9QqKi8krhw0nEZT9W1If6yIsNCPRvci/H6KpwdJsEbomBWp/XFoCZUhXJLkEWR0Q5/xnQ6amiyX9L5php6EvgxGcypcT+2cuc9wgbu+P632sGqAc1L8kVF8S4qQeR8xYMk5D3lQNPxfekXDunuOX0RB6uYvwYMelfXo56cFYk29vt9B+PCDLeu/Fi/G4onjPoQzvMb/C7yLDkmCKlg3EZvvMr6QVmqyWRXzJCoIDl0+jt9DbQeuLO+LFNxZDVxo02FQxjImhY0/NOA/v3FYZAgRJg3qxZl5AWT+JN7JrmSGIDXMOtTr8JB0gqnavkh/WtFpP452fmzzfIiFwdYlRrY+Ahht7ZpCY/kvZFrYQPh0EZTrvytTbM7dN84OtIT84UyWDeVJIqOXw1HPPFNpe7FxUpKzsQsr1JRdQdLkLgEN3aTOo="
+  
+script: 
+  - bash ci.bash
