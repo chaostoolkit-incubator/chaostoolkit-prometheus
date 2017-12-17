@@ -29,10 +29,10 @@ monitored by Prometheus.
 Here is an example of querying Prometheus at a given moment
 
 ```json
-"probes": {
-    "close": {
-        "title": "Fetch the CPU usage for our service",
-        "layer": "application",
+{
+    "type": "probe",
+    "name": "fetch-cpu-just-2mn-ago",
+    "provider": {
         "type": "python",
         "module": "chaosprometheus.probes",
         "func": "query",
@@ -47,10 +47,10 @@ Here is an example of querying Prometheus at a given moment
 You can also ask for an interval as follows:
 
 ```json
-"probes": {
-    "close": {
-        "title": "Fetch the CPU usage for our service over a short period",
-        "layer": "application",
+{
+    "type": "probe",
+    "name": "fetch-cpu-over-interval",
+    "provider": {
         "type": "python",
         "module": "chaosprometheus.probes",
         "func": "query_interval",
