@@ -4,6 +4,10 @@
 
 [Unreleased]: https://github.com/chaostoolkit/chaostoolkit-prometheus/compare/0.3.0...HEAD
 
+### Added
+
+-   Added `requirements-dev.txt` for development dependencies to match template.
+
 ## [0.3.0][] - 2017-12-17
 
 [0.3.0]: https://github.com/chaostoolkit/chaostoolkit-prometheus/compare/0.2.0...0.3.0
