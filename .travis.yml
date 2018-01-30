@@ -5,12 +5,22 @@ python:
   - 3.6
 
 install:
-  - pip install -r requirements.txt
+  - pip install -r requirements.txt -r requirements-dev.txt
 
 env:
   global:
   - PYPI_USER_NAME: "chaostoolkit"
-  - secure: "Z46lWuLoC/tOZKnu8YpKjPvkU9MaOXuW2NJqhsAWOD7TtI0qVwpZL6+3bmGEbmhrO81XDUrGynRMTn//7t54FFEooxpmOYXPpfbjpDPoAhzPj8LLBF+IQIwOVFEYGmgppCdWA5/io7SQJhMpIWO+lw4HC9GLzM00jBurhBldaK8XpQFhaoYYYyZPxdplg4Dk/ynrSMDgeLPyJmg3zmFzNnirxH4LL3Cn9/OHRAwPFwgWPxegRshSLKkIDTsJH3Ej/fVEptxcgzr42fo6Nn48KOeE9uR47t5g3qWoPgau2ZoSDjJPShTemgAyvP2bA3wjewedja+8KPkik/GE5kzHum6TFQGNEfvFmGDc32hNLObI64RAnYZqO3zVNbI565+tOzQZYJ4SPmf2Foct+M+NVoAz+4ttX8xumAkp9e/6yTS8kb342t1+a4eoO/I4iQ37PfkV132blxgdxTQeuNcWaxaLAkNFZMFBzqap7Spypo+0VfQ3iUNaT8dCQ2ZNfLjQlidtnA/Jtr7kbzNuybJEY0Ku7u3HBuzLOuoI7klEeLzLVsFmdckwYcyu8V12MWmBDTZbf8xY7EpuBqCHV1P3yjq1S/a2sqtV/2b7R1Wazt7C12DCeR+7XgymNcMJaTd6MJ9Q4iOuNImPWLlZIz+3dsEyFVbjCx7YBJrQtr6kgxs="
-  
+  - secure: "DmxnchubSPYRWOnWsv4TBVXkzKtVGKHTf4/6fybEFH4k5Vr0TiqkhHbbo56J4z8HKiGFuRgxNojGBQaHfU0sSl3JDwq17rN+RanHwlEzqq4KXlIjLMoj8JjY/aFr8pwEk6VMeELPg3OTtSte9jr93na/UgEP0wE25kL4xzWywj4esSjngbf0AKTp44xgZ89/VCA7ZkAR4tSqIul6wTbGLuMFsUv0NfFUA5oaQIq2Dgrmja6yMAuFVGYmmuBlwVU563UU6P2OUsSUL5Z4GjUj96a3CyZ0BdtgAXdSviUwb6HdCWXxkerJTmTJBww7Jxnxr1WEDbdXmIUJKNRPMpLuGRqKcrZ7KfjVxGs3uife/LNptDTqCTqgY9xdkPVFPIIZUpDmCo3M3RIjI3YUiNETwzP/RvkdISiB4KQCAzf2E4nnyzVHkYfOqQdRpKfK+SNlS4mTdCQCBw61TALcF30UsgqMEz1NQOgA5qI9vyHtBaS6WWeog5WOpUC++QZJigfqS+LmD5/Osa/oAUUaf03vx8s6FXaeCWKJpz6Ypfhc22VNa1Pmr1/tctUzWtDnMy8JzGUBWqX6KLQr8TpwPSDRIGPpre7ReiGK+bUSm1xTWpzRKoF84XzIouEAQEkTralgVazQm/i+qyKZobgjReMRCT+Qwr4chKluBcRDkN4eja8="
+
 script: 
   - bash ci.bash
+
+notifications:
+  webhooks:
+    urls:
+    - 'https://webhook.atomist.com/atomist/travis/teams/T76U4GPGF'
+    on_cancel: always
+    on_error: always
+    on_start: always
+    on_failure: always
+    on_success: always
