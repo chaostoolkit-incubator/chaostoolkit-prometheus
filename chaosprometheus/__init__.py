@@ -31,5 +31,6 @@ def load_exported_activities() -> List[DiscoveredActivities]:
     """
     activities = []
     activities.extend(discover_probes("chaosprometheus.probes"))
+    activities.extend(discover_probes("chaosprometheus.verification.probes"))
 
     return activities
