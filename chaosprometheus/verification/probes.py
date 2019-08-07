@@ -67,10 +67,10 @@ def query_results_lower_than_threshold(threshold: float = None,
         for entry in value['data']['result']:
             if entry['value'][1] < threshold:
                 logger.debug("Probe: value %f is below the threshold %f" %
-                             (entry.['value'][1], threshold))
+                             (entry['value'][1], threshold))
             else:
                 logger.error("Probe: value %f is higher than threshold %f" %
-                             (entry.['value'][1], threshold))
+                             (entry['value'][1], threshold))
                 rtn = False
 
     if rtn:
@@ -138,10 +138,10 @@ def query_results_higher_than_threshold(threshold: float = None,
         for entry in value['data']['result']:
             if entry['value'][1] > threshold:
                 logger.debug("Probe: value %f is higher than threshold %f" %
-                             (entry.['value'][1], threshold))
+                             (entry['value'][1], threshold))
             else:
                 logger.error("Probe: value %f is below the threshold %f" %
-                             (entry.['value'][1], threshold))
+                             (entry['value'][1], threshold))
                 rtn = False
 
     if rtn:
