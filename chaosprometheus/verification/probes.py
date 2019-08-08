@@ -9,9 +9,10 @@ __all__ = ["query_results_lower_than_threshold",
 threshold_variable_prefix = "chaosprometheus"
 
 
-def query_results_lower_than_threshold(threshold: float = None,
+def query_results_lower_than_threshold(value: dict,
+                                       threshold: float = None,
                                        threshold_variable: str = None,
-                                       value: dict) -> bool:
+                                       ) -> bool:
     """
     Checks if all passed Prometheus values are below the
     given threshold. If so returns True, otherwise False.
@@ -80,9 +81,10 @@ def query_results_lower_than_threshold(threshold: float = None,
     return rtn
 
 
-def query_results_higher_than_threshold(threshold: float = None,
+def query_results_higher_than_threshold(value: dict,
+                                        threshold: float = None,
                                         threshold_variable: str = None,
-                                        value: dict) -> bool:
+                                        ) -> bool:
     """
     Checks if all passed Prometheus values are higher than the
     given threshold. If so returns True, otherwise False.
@@ -151,9 +153,10 @@ def query_results_higher_than_threshold(threshold: float = None,
     return rtn
 
 
-def set_result_as_threshold_variable(threshold_variable: str,
+def set_result_as_threshold_variable(value: dict,
+                                     threshold_variable: str,
                                      resize: int = 100,
-                                     value: dict) -> bool:
+                                     ) -> bool:
     """
     Saves the passed Prometheus query value in an environment
     `threshold_variable` that can be used by query_results_
