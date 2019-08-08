@@ -30,8 +30,9 @@ def query_results_lower_than_threshold(value: dict,
                                              threshold_varible)),
                                              threshold_variable_prefix,
                                              threshold_variable))
-            threshold = float(os.getenv("%s-%s") % (threshold_variable_prefix,
-                                                    threshold_variable))
+            threshold = __parse_to_number(os.getenv("%s-%s") %
+                                          (threshold_variable_prefix,
+                                           threshold_variable))
 
     if threshold is None:
         raise Exception("No threshold given")
@@ -55,23 +56,25 @@ def query_results_lower_than_threshold(value: dict,
     if range_query:
         for entry in value['data']['result']:
             for value in entry['values']:
-                if value[1] < threshold:
+                v = __parse_to_number(value[1])
+                if v < threshold:
                     logger.debug("Probe: value %f is below the threshold %f"
-                                 % (value[1], threshold))
+                                 % (v, threshold))
                 else:
                     logger.error("Probe: value %f is higher than threshold %f"
-                                 % (value[1], threshold))
+                                 % (v, threshold))
                     rtn = False
 
     # handle Prometheus query
     else:
         for entry in value['data']['result']:
-            if entry['value'][1] < threshold:
+            v = __parse_to_number(entry['value'][1])
+            if v < threshold:
                 logger.debug("Probe: value %f is below the threshold %f" %
-                             (entry['value'][1], threshold))
+                             (v, threshold))
             else:
                 logger.error("Probe: value %f is higher than threshold %f" %
-                             (entry['value'][1], threshold))
+                             (v, threshold))
                 rtn = False
 
     if rtn:
@@ -102,8 +105,9 @@ def query_results_higher_than_threshold(value: dict,
                                              threshold_varible)),
                                              threshold_variable_prefix,
                                              threshold_variable))
-            threshold = float(os.getenv("%s-%s") % (threshold_variable_prefix,
-                                                    threshold_variable))
+            threshold = __parse_to_number(os.getenv("%s-%s") %
+                                          (threshold_variable_prefix,
+                                           threshold_variable))
 
     if threshold is None:
         raise Exception("No threshold given")
@@ -127,23 +131,25 @@ def query_results_higher_than_threshold(value: dict,
     if range_query:
         for entry in value['data']['result']:
             for value in entry['values']:
-                if value[1] > threshold:
+                v = __parse_to_number(value[1])
+                if v > threshold:
                     logger.debug("Probe: value %f is higher than threshold %f"
-                                 % (value[1], threshold))
+                                 % (v, threshold))
                 else:
                     logger.error("Probe: value %f is below the threshold %f"
-                                 % (value[1], threshold))
+                                 % (v, threshold))
                     rtn = False
 
     # handle Prometheus query
     else:
         for entry in value['data']['result']:
-            if entry['value'][1] > threshold:
+            v = __parse_to_number(entry['value'][1])
+            if v > threshold:
                 logger.debug("Probe: value %f is higher than threshold %f" %
-                             (entry['value'][1], threshold))
+                             (v, threshold))
             else:
                 logger.error("Probe: value %f is below the threshold %f" %
-                             (entry['value'][1], threshold))
+                             (v, threshold))
                 rtn = False
 
     if rtn:
@@ -194,7 +200,7 @@ def set_result_as_threshold_variable(value: dict,
             for metric in value['data']['result']:
                 threshold = float(0.0)
                 for value in metric['values']:
-                    threshold += float(value[1])
+                    threshold += __parse_to_number(value[1])
                 metrics_thresholds.append(
                     float(threshold / len(metric['values'])))
             threshold = float(0.0)
@@ -210,7 +216,7 @@ def set_result_as_threshold_variable(value: dict,
     else:
         try:
             for metric in value['data']['result']:
-                threshold += float(metric['value'][1])
+                threshold += __parse_to_number(metric['value'][1])
             threshold /= len(value['data']['result'])
         except Exception as e:
             logger.error("Probe: An error occured during the threshold\
@@ -226,3 +232,14 @@ def set_result_as_threshold_variable(value: dict,
                 (threshold, threshold_variable))
 
     return True
+
+
+def __parse_to_number(s: str):
+    """
+    Parses given string `s` either into an int or float.
+    If it can't parse it, it throws an exception.
+    """
+    try:
+        return int(s)
+    except ValueError:
+        return float(s)
