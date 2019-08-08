@@ -49,14 +49,10 @@ def query_results_lower_than_threshold(value: dict,
     if threshold_variable:
         if ("%s-%s" % (threshold_variable_prefix, threshold_variable))\
           in globals():
-            logger.debug("Probe: Using threshold %s from global\
-                          variable %s-%s" % (globals()["%s-%s" % (
-                                             threshold_variable_prefix,
-                                             threshold_variable)],
-                                             threshold_variable_prefix,
-                                             threshold_variable))
             threshold = globals()[("%s-%s") % (threshold_variable_prefix,
                                                threshold_variable)]
+            logger.debug("Probe: Using threshold %f from global\
+variable %s-%s" % (threshold, threshold_variable_prefix, threshold_variable))
 
     if threshold is None:
         raise Exception("No threshold given")
@@ -123,14 +119,10 @@ def query_results_higher_than_threshold(value: dict,
     if threshold_variable:
         if "%s-%s" % (threshold_variable_prefix, threshold_variable)\
           in globals():
-            logger.debug("Probe: Using threshold %s from global\
-                          variable %s-%s" % (globals()["%s-%s" % (
-                                             threshold_variable_prefix,
-                                             threshold_variable)],
-                                             threshold_variable_prefix,
-                                             threshold_variable))
             threshold = globals()[("%s-%s") % (threshold_variable_prefix,
                                                threshold_variable)]
+            logger.debug("Probe: Using threshold %f from global\
+variable %s-%s" % (threshold, threshold_variable_prefix, threshold_variable))
 
     if threshold is None:
         raise Exception("No threshold given")
