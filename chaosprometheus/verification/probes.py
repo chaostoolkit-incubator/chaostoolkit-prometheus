@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from logzero import logger
+from chaoslib.exceptions import ActivityFailed
 import os
 
 __all__ = ["query_results_lower_than_threshold",
@@ -55,14 +56,15 @@ def query_results_lower_than_threshold(value: dict,
 variable %s-%s" % (threshold, threshold_variable_prefix, threshold_variable))
 
     if threshold is None:
-        raise Exception("No threshold given")
+        logger.error("Probe: No threshold given")
+        raise ActivityFailed()
 
     rtn = True
 
     # if no query result is provided exit with False
     if len(value['data']['result']) == 0:
         logger.error("Probe: The query didn't provide any result")
-        return False
+        raise ActivityFailed()
 
     # check if we got results from a range_query
     range_query = False
@@ -100,6 +102,8 @@ variable %s-%s" % (threshold, threshold_variable_prefix, threshold_variable))
     if rtn:
         logger.info("Probe: ok, all values are below the given threshold\
  of %f" % (threshold,))
+    else:
+        raise ActivityFailed()
 
     return rtn
 
@@ -125,14 +129,15 @@ def query_results_higher_than_threshold(value: dict,
 variable %s-%s" % (threshold, threshold_variable_prefix, threshold_variable))
 
     if threshold is None:
-        raise Exception("No threshold given")
+        logger.error("Probe: No threshold given")
+        raise ActivityFailed()
 
     rtn = True
 
     # if no query result is provided exit with False
     if len(value['data']['result']) == 0:
         logger.error("Probe: The query didn't provide any result")
-        return False
+        raise ActivityFailed()
 
     # check if we got results from a range_query
     range_query = False
@@ -170,6 +175,8 @@ variable %s-%s" % (threshold, threshold_variable_prefix, threshold_variable))
     if rtn:
         logger.info("Probe: ok, all values are higher than the given\
  threshold %f" % (threshold,))
+    else:
+        raise ActivityFailed()
 
     return rtn
 
@@ -196,7 +203,7 @@ def __set_result_as_threshold_variable(value: dict,
     # if no query result is provided exit with False
     if len(value['data']['result']) == 0:
         logger.error("Probe: The query didn't provide any result")
-        return False
+        raise ActivityFailed()
 
     # check if we got results from a range_query
     range_query = False
@@ -225,7 +232,7 @@ def __set_result_as_threshold_variable(value: dict,
         except Exception as e:
             logger.error("Probe: An error occured during the threshold\
  calculation. %s" % (e,))
-            return False
+            raise ActivityFailed(e)
 
     # extract the average threshold value from the Prometheus query
     else:
@@ -236,7 +243,7 @@ def __set_result_as_threshold_variable(value: dict,
         except Exception as e:
             logger.error("Probe: An error occured during the threshold\
  calculation. %s" % (e,))
-            return False
+            raise ActivityFailed(e)
 
     # resize the threshold and save it in an environment variable
     threshold = threshold * float(resize/100)
