@@ -47,8 +47,8 @@ def query_results_lower_than_threshold(value: dict,
     values.
     """
     if threshold_variable:
-        if ("%s-%s" % (threshold_variable_prefix, threshold_variable))
-        in globals:
+        if ("%s-%s" % (threshold_variable_prefix, threshold_variable))\
+          in globals():
             logger.debug("Probe: Using threshold %s from global\
                           variable %s-%s" % (globals()["%s-%s" % (
                                              threshold_variable_prefix,
@@ -121,8 +121,8 @@ def query_results_higher_than_threshold(value: dict,
     values.
     """
     if threshold_variable:
-        if ("%s-%s" % (threshold_variable_prefix, threshold_variable))
-        in globals:
+        if "%s-%s" % (threshold_variable_prefix, threshold_variable)\
+          in globals():
             logger.debug("Probe: Using threshold %s from global\
                           variable %s-%s" % (globals()["%s-%s" % (
                                              threshold_variable_prefix,
