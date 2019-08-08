@@ -9,6 +9,31 @@ __all__ = ["query_results_lower_than_threshold",
 threshold_variable_prefix = "chaosprometheus"
 
 
+def query_result_degradation(value: dict,
+                             threshold_variable: str = None,
+                             resize: int = 100,
+                             higher: bool = True) -> bool:
+    """
+    On the first run, saves the average of the query result as reference.
+    On the second run, compares the average query result against the reference
+    to detect performance degradation.
+    """
+    # second run (compare reference and new value)
+    if "%s-%s" % (threshold_variable_prefix, threshold_variable) in globals():
+        if higher:
+            return query_results_higher_than_threshold(
+                value,
+                threshold_variable=threshold_variable)
+        else:
+            return query_results_lower_than_threshold(
+                value,
+                threshold_variable=threshold_variable)
+    # first run (save the average value as reference)
+    else:
+        return __set_result_as_threshold_variable(value, threshold_variable,
+                                                  resize)
+
+
 def query_results_lower_than_threshold(value: dict,
                                        threshold: float = None,
                                        threshold_variable: str = None,
@@ -22,17 +47,16 @@ def query_results_lower_than_threshold(value: dict,
     values.
     """
     if threshold_variable:
-        if os.getenv("%s-%s" % (threshold_variable_prefix,
-                                threshold_variable)):
-            logger.debug("Probe: Using threshold %s from environment\
-                          variable %s-%s" % (os.getenv("%s-%s" % (
+        if ("%s-%s" % (threshold_variable_prefix, threshold_variable))
+        in globals:
+            logger.debug("Probe: Using threshold %s from global\
+                          variable %s-%s" % (globals()["%s-%s" % (
                                              threshold_variable_prefix,
-                                             threshold_varible)),
+                                             threshold_varible)],
                                              threshold_variable_prefix,
                                              threshold_variable))
-            threshold = __parse_to_number(os.getenv("%s-%s") %
-                                          (threshold_variable_prefix,
-                                           threshold_variable))
+            threshold = globals()[("%s-%s") % (threshold_variable_prefix,
+                                               threshold_variable)]
 
     if threshold is None:
         raise Exception("No threshold given")
@@ -79,7 +103,7 @@ def query_results_lower_than_threshold(value: dict,
 
     if rtn:
         logger.info("Probe: ok, all values are below the given threshold\
-                     of %f" % (threshold,))
+ of %f" % (threshold,))
 
     return rtn
 
@@ -97,17 +121,16 @@ def query_results_higher_than_threshold(value: dict,
     values.
     """
     if threshold_variable:
-        if os.getenv("%s-%s" % (threshold_variable_prefix,
-                                threshold_variable)):
-            logger.debug("Probe: Using threshold %s from environment\
-                          variable %s-%s" % (os.getenv("%s-%s" % (
+        if ("%s-%s" % (threshold_variable_prefix, threshold_variable))
+        in globals:
+            logger.debug("Probe: Using threshold %s from global\
+                          variable %s-%s" % (globals()["%s-%s" % (
                                              threshold_variable_prefix,
-                                             threshold_varible)),
+                                             threshold_varible)],
                                              threshold_variable_prefix,
                                              threshold_variable))
-            threshold = __parse_to_number(os.getenv("%s-%s") %
-                                          (threshold_variable_prefix,
-                                           threshold_variable))
+            threshold = globals()[("%s-%s") % (threshold_variable_prefix,
+                                               threshold_variable)]
 
     if threshold is None:
         raise Exception("No threshold given")
@@ -154,17 +177,17 @@ def query_results_higher_than_threshold(value: dict,
 
     if rtn:
         logger.info("Probe: ok, all values are higher than the given\
-                     threshold %f" % (threshold,))
+ threshold %f" % (threshold,))
 
     return rtn
 
 
-def set_result_as_threshold_variable(value: dict,
-                                     threshold_variable: str,
-                                     resize: int = 100,
-                                     ) -> bool:
+def __set_result_as_threshold_variable(value: dict,
+                                       threshold_variable: str,
+                                       resize: int = 100,
+                                       ) -> bool:
     """
-    Saves the passed Prometheus query value in an environment
+    Saves the passed Prometheus query value in an global
     `threshold_variable` that can be used by query_results_
     functions. Allows to adapt the threshold_variable in % of its own value
     through the `resize` parameter to reduce or increase the threshold value.
@@ -209,7 +232,7 @@ def set_result_as_threshold_variable(value: dict,
             threshold /= len(metrics_threshold)
         except Exception as e:
             logger.error("Probe: An error occured during the threshold\
-                          calculation. %s" % (e,))
+ calculation. %s" % (e,))
             return False
 
     # extract the average threshold value from the Prometheus query
@@ -220,13 +243,13 @@ def set_result_as_threshold_variable(value: dict,
             threshold /= len(value['data']['result'])
         except Exception as e:
             logger.error("Probe: An error occured during the threshold\
-                          calculation. %s" % (e,))
+ calculation. %s" % (e,))
             return False
 
     # resize the threshold and save it in an environment variable
     threshold = threshold * float(resize/100)
-    os.environ["%s-%s" % (threshold_variable_prefix, threshold_variable)] = \
-        str(threshold)
+    globals()["%s-%s" % (threshold_variable_prefix, threshold_variable)] = \
+        threshold
 
     logger.info("Probe: saved threshold %f in threshold_variable %s" %
                 (threshold, threshold_variable))
