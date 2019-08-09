@@ -5,7 +5,7 @@ import os
 
 __all__ = ["query_results_lower_than_threshold",
            "query_results_higher_than_threshold",
-           "set_result_as_threshold"]
+           "query_result_degradation"]
 
 threshold_variable_prefix = "chaosprometheus"
 
@@ -18,6 +18,21 @@ def query_result_degradation(value: dict,
     On the first run, saves the average of the query result as reference.
     On the second run, compares the average query result against the reference
     to detect performance degradation.
+
+    The parameter `value` will be filled automatically by chaostoolkit and will
+    receive the result from Prometheus'es (range_)query.
+    The parameter `threshold_variable` defines in what variable the threshold
+    will be temporarily stored.
+    The parameter `resize` can be used to resize the threshold_variable's
+    value to define an upper or lower bound. The resize value defines the
+    percentage to which the actual threshold value will be resized. (e.g.
+    a value of 100 results in no change, a value 90 results in a decrease of
+    10%, and a value of 110 results in an increase of 10% of the original
+    threshold value.)
+    If the parameter `higher` is set to `True` the observed value of the 2nd
+    run needs to be higher than the reference value. If the parameter `higher`
+    is set to `False` the observed value of the 2nd run needs to be below the
+    reference value of the 1st run.
     """
     # second run (compare reference and new value)
     if "%s-%s" % (threshold_variable_prefix, threshold_variable) in globals():
