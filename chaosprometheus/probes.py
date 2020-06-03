@@ -47,6 +47,17 @@ def query(query: str, when: str = None, timeout: float = None,
     return r.json()
 
 
+def query_value(query_string: str, when: str = None, timeout: float = None,
+          configuration: Configuration = None,
+          secrets: Secrets = None):
+    results = query(query_string, when, timeout, configuration, secrets)
+    if len(results['data']['result']) != 1:
+        raise FailedActivity("Expected a Prometheus response with just one result")
+    if len(results['data']['result'][0]['value']) != 2:
+        raise FailedActivity("Expected a Prometheus result with just one value")
+    return float(results['data']['result'][0]['value'][1])
+
+
 def query_interval(query: str, start: str, end: str, step: int = 1,
                    timeout: float = None, configuration: Configuration = None,
                    secrets: Secrets = None) -> Dict[str, Any]:
