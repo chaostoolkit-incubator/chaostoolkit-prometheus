@@ -9,7 +9,7 @@ import requests
 from chaoslib.exceptions import FailedActivity
 from chaoslib.types import Configuration, Secrets
 
-__all__ = ["query", "query_interval"]
+__all__ = ["query", "query_interval", "query_value"]
 
 
 def query(query: str, when: str = None, timeout: float = None,
@@ -48,13 +48,15 @@ def query(query: str, when: str = None, timeout: float = None,
 
 
 def query_value(query_string: str, when: str = None, timeout: float = None,
-          configuration: Configuration = None,
-          secrets: Secrets = None):
+                configuration: Configuration = None,
+                secrets: Secrets = None):
     results = query(query_string, when, timeout, configuration, secrets)
     if len(results['data']['result']) != 1:
-        raise FailedActivity("Expected a Prometheus response with just one result")
+        raise FailedActivity(
+            "Expected a Prometheus response with just one result")
     if len(results['data']['result'][0]['value']) != 2:
-        raise FailedActivity("Expected a Prometheus result with just one value")
+        raise FailedActivity(
+            "Expected a Prometheus result with just one value")
     return float(results['data']['result'][0]['value'][1])
 
 

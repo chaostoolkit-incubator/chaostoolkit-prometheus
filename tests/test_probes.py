@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-import pytest
-import requests
-import requests_mock
+from unittest.mock import patch, MagicMock
 
+import pytest
+import requests_mock
 from chaoslib.exceptions import FailedActivity
-from chaosprometheus.probes import query, query_interval
+from chaosprometheus.probes import query, query_interval, query_value
 
 
 def test_failed_parsing_when_date():
@@ -37,3 +37,42 @@ def test_failed_running_query():
             query_interval(query="request_processing_seconds_count",
                            start="2 minutes ago", end="now")
     assert "Prometheus query" in str(ex.value)
+
+
+def test_query_value_returns_value():
+    with requests_mock.mock() as m:
+        m.get(
+            "http://localhost:9090/api/v1/query",
+            status_code=200,
+            json={
+                "data": {
+                    "result": [
+                        {
+                            "value": [0, 1]
+                        }
+                    ]
+                }
+            }
+        )
+        return_value = query_value("some_value_query", "1m ago")
+    assert return_value == 1
+
+
+def test_query_value_raises_when_multiple_values():
+    with requests_mock.mock() as m:
+        m.get(
+            "http://localhost:9090/api/v1/query",
+            status_code=200,
+            json={
+                "data": {
+                    "result": [
+                        {
+                            "value": [0, 1, 2]
+                        }
+                    ]
+                }
+            }
+        )
+        with pytest.raises(FailedActivity) as exc:
+            return_value = query_value("some_value_query", "1m ago")
+    assert "Expected a Prometheus result with just one value" in str(exc)
