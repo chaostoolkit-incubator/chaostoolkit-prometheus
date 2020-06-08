@@ -76,3 +76,14 @@ def test_query_value_raises_when_multiple_values():
         with pytest.raises(FailedActivity) as exc:
             return_value = query_value("some_value_query", "1m ago")
     assert "Expected a Prometheus result with just one value" in str(exc)
+
+
+def test_query_value_returns_zero_when_no_results():
+    with requests_mock.mock() as m:
+        m.get(
+            "http://localhost:9090/api/v1/query",
+            status_code=200,
+            json={"data": {"result": []}}
+        )
+        return_value = query_value("some_value_query", "1m ago")
+    assert return_value == 0

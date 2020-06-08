@@ -51,17 +51,20 @@ def query_value(query_string: str, when: str = None, timeout: float = None,
                 configuration: Configuration = None,
                 secrets: Secrets = None):
     results = query(query_string, when, timeout, configuration, secrets)
-    if len(results['data']['result']) != 1:
+    if len(results['data']['result']) == 0:
+        return 0
+    elif len(results['data']['result']) > 1:
         raise FailedActivity(
             "Expected a Prometheus response with just one result, but got:\n{}"
             .format(results)
         )
-    if len(results['data']['result'][0]['value']) != 2:
+    elif len(results['data']['result'][0]['value']) != 2:
         raise FailedActivity(
             "Expected a Prometheus result with just one value, but got:\n{}"
             .format(results)
         )
-    return float(results['data']['result'][0]['value'][1])
+    else:
+        return float(results['data']['result'][0]['value'][1])
 
 
 def query_interval(query: str, start: str, end: str, step: int = 1,
