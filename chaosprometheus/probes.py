@@ -22,7 +22,6 @@ def query(query: str, when: str = None, timeout: float = None,
     base = (configuration or {}).get(
         "prometheus_base_url", "http://localhost:9090")
     url = "{base}/api/v1/query".format(base=base)
-
     params = {"query": query}
 
     if timeout is not None:
@@ -35,7 +34,7 @@ def query(query: str, when: str = None, timeout: float = None,
             raise FailedActivity("failed to parse '{s}'".format(s=when))
         params["time"] = maya.MayaDT.from_datetime(when_dt).rfc3339()
 
-    logger.debug("Querying with: {q}".format(q=params))
+    logger.debug("Querying {host} with: {q}".format(host=base, q=params))
 
     r = requests.get(
         url, headers={"Accept": "application/json"}, params=params)

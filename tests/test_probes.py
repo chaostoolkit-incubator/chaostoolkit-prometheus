@@ -87,3 +87,25 @@ def test_query_value_returns_zero_when_no_results():
         )
         return_value = query_value("some_value_query", "1m ago")
     assert return_value == 0
+
+
+def test_query_value_passes_down_prometheus_configuration():
+    with requests_mock.mock() as m:
+        m.get(
+            "http://not_local_host:9090/api/v1/query",
+            status_code=200,
+            json={
+                "data": {
+                    "result": [
+                        {
+                            "value": [0, 1]
+                        }
+                    ]
+                }
+            }
+        )
+        return_value = \
+            query_value("some_value_query", "1m ago", 10,
+                        {"prometheus_base_url": "http://not_local_host:9090"})
+
+    assert return_value == 1
