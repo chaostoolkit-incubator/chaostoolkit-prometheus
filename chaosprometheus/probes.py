@@ -13,7 +13,7 @@ __all__ = ["query", "query_interval"]
 
 
 def query(query: str, when: str = None, timeout: float = None,
-          configuration: Configuration = None,
+          verify_tls = True, configuration: Configuration = None,
           secrets: Secrets = None) -> Dict[str, Any]:
     """
     Run an instant query against a Prometheus server and returns its result
@@ -38,7 +38,7 @@ def query(query: str, when: str = None, timeout: float = None,
     logger.debug("Querying with: {q}".format(q=params))
 
     r = requests.get(
-        url, headers={"Accept": "application/json"}, params=params)
+        url, headers={"Accept": "application/json"}, params=params, verify = verify_tls)
 
     if r.status_code != 200:
         raise FailedActivity(
@@ -48,7 +48,8 @@ def query(query: str, when: str = None, timeout: float = None,
 
 
 def query_interval(query: str, start: str, end: str, step: int = 1,
-                   timeout: float = None, configuration: Configuration = None,
+                   timeout: float = None, verify_tls = True, 
+                   configuration: Configuration = None,
                    secrets: Secrets = None) -> Dict[str, Any]:
     """
     Run a range query against a Prometheus server and returns its result as-is.
@@ -83,7 +84,7 @@ def query_interval(query: str, start: str, end: str, step: int = 1,
     logger.debug("Querying with: {q}".format(q=params))
 
     r = requests.get(
-        url, headers={"Accept": "application/json"}, params=params)
+        url, headers={"Accept": "application/json"}, params=params, verify = verify_tls)
 
     if r.status_code != 200:
         raise FailedActivity(
