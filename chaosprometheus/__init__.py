@@ -9,7 +9,7 @@ from chaoslib.discovery.discover import (
 from chaoslib.types import DiscoveredActivities, Discovery
 from logzero import logger
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 
 def discover(discover_system: bool = True) -> Discovery:
