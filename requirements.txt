@@ -1,5 +1,4 @@
 chaostoolkit-lib~=1.26
-logzero
 requests
 dateparser
 maya

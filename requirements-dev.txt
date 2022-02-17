@@ -1,6 +1,8 @@
+requests-mock
 coverage
-pytest>=2.8
+pytest~=6.2; python_version >= '3.6'
 pytest-cov
-pycodestyle
 pytest-sugar
-requests_mock
+black
+isort
+flake8
