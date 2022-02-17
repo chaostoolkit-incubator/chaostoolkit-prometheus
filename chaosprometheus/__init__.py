@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from typing import List
 
-from chaoslib.discovery.discover import (discover_actions, discover_probes,
+from chaoslib.discovery.discover import (discover_activities, discover_probes,
                                          initialize_discovery_result)
 from chaoslib.types import DiscoveredActivities, Discovery
 from logzero import logger
@@ -31,5 +31,7 @@ def load_exported_activities() -> List[DiscoveredActivities]:
     """
     activities = []
     activities.extend(discover_probes("chaosprometheus.probes"))
+    activities.extend(
+        discover_activities("chaosprometheus.metrics", "control"))
 
     return activities

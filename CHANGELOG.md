@@ -7,6 +7,7 @@
 ### Added
 
 -   Added `requirements-dev.txt` for development dependencies to match template.
+-   Added control to send metrics to the pushgateway service
 
 ## [0.3.0][] - 2017-12-17
 

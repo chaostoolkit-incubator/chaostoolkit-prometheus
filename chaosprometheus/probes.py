@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 from typing import Any, Dict
 
-import dateparser
-from logzero import logger
-import maya
-import requests
+try:
+    import dateparser
+    from logzero import logger
+    import maya
+    import requests
+except ImportError as x:
+    print(x)
+    raise
 
 from chaoslib.exceptions import FailedActivity
 from chaoslib.types import Configuration, Secrets

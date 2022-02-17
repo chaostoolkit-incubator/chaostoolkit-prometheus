@@ -72,6 +72,40 @@ or raises an exception when an error is met.
 The result is not further process and should be found in the generated report
 of the experiment run.
 
+You can also send metrics to a pushgateway service via a control:
+
+```json
+{
+    "controls": [
+        {
+            "name": "prometheus",
+            "provider": {
+                "type": "python",
+                "module": "chaosprometheus.metrics",
+                "arguments": {
+                    "pushgateway_url": "http://someip:9091",
+                    "job": "chaostoolkit"
+                }
+            }
+        }
+    ]
+}
+```
+
+You can also set three more arguments:
+
+* `grouping_key`: A mapping of strings to uniquely aggregate multiple runs
+  in the Prometheus backend
+* `trace_id`: This must be a string which will identify this run uniquely in
+  your metrics. If none is a provided, a random string is generated.
+* `experiment_ref`: Sometimes it's useful to identify a particular experiment,
+  not just its run, throughout many runs. This is the string to do that. If
+  none is provided, a hash of the experiment is performed and used. The hash
+  is not stable across changes of the experiment of course.
+  
+These are particularly useful when you couple this extension with others like
+Loki where you want to cross-reference between logs and metrics.
+
 ## Contribute
 
 If you wish to contribute more functions to this package, you are more than
