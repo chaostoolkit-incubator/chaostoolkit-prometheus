@@ -4,7 +4,6 @@
 [![License](https://img.shields.io/pypi/l/chaostoolkit-prometheus.svg)](https://img.shields.io/pypi/l/chaostoolkit-prometheus.svg)
 
 [![Build](https://github.com/chaostoolkit-incubator/chaostoolkit-prometheus/actions/workflows/build.yaml/badge.svg)](https://github.com/chaostoolkit-incubator/chaostoolkit-prometheus/actions/workflows/build.yaml)
-[![codecov](https://codecov.io/gh/chaostoolkit-incubator/chaostoolkit-prometheus/branch/master/graph/badge.svg)](https://codecov.io/gh/chaostoolkit-incubator/chaostoolkit-prometheus)
 [![Python versions](https://img.shields.io/pypi/pyversions/chaostoolkit-prometheus.svg)](https://www.python.org/)
 
 [Prometheus][prometheus] support for the [Chaos Toolkit][chaostoolkit].
