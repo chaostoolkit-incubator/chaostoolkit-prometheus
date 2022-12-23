@@ -2,7 +2,6 @@
 
 [![Version](https://img.shields.io/pypi/v/chaostoolkit-prometheus.svg)](https://img.shields.io/pypi/v/chaostoolkit-prometheus.svg)
 [![License](https://img.shields.io/pypi/l/chaostoolkit-prometheus.svg)](https://img.shields.io/pypi/l/chaostoolkit-prometheus.svg)
-
 [![Build](https://github.com/chaostoolkit-incubator/chaostoolkit-prometheus/actions/workflows/build.yaml/badge.svg)](https://github.com/chaostoolkit-incubator/chaostoolkit-prometheus/actions/workflows/build.yaml)
 [![Python versions](https://img.shields.io/pypi/pyversions/chaostoolkit-prometheus.svg)](https://www.python.org/)
 
