@@ -21,6 +21,7 @@ def query(
     query: str,
     when: str = None,
     timeout: float = None,
+    verify_tls: bool = True,
     configuration: Configuration = None,
     secrets: Secrets = None,
 ) -> Dict[str, Any]:
@@ -48,7 +49,12 @@ def query(
 
     logger.debug("Querying with: {q}".format(q=params))
 
-    r = requests.get(url, headers={"Accept": "application/json"}, params=params)
+    r = requests.get(
+        url, 
+        headers={"Accept": "application/json"}, 
+        params=params, 
+        verify=verify_tls
+    )
 
     if r.status_code != 200:
         raise FailedActivity(
@@ -64,6 +70,7 @@ def query_interval(
     end: str,
     step: int = 1,
     timeout: float = None,
+    verify_tls: bool = True,
     configuration: Configuration = None,
     secrets: Secrets = None,
 ) -> Dict[str, Any]:
@@ -100,7 +107,12 @@ def query_interval(
 
     logger.debug("Querying with: {q}".format(q=params))
 
-    r = requests.get(url, headers={"Accept": "application/json"}, params=params)
+    r = requests.get(
+        url, 
+        headers={"Accept": "application/json"}, 
+        params=params, 
+        verify=verify_tls
+    )
 
     if r.status_code != 200:
         raise FailedActivity(

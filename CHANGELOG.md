@@ -4,6 +4,10 @@
 
 [Unreleased]: https://github.com/chaostoolkit/chaostoolkit-prometheus/compare/0.5.0...HEAD
 
+### Added
+
+- Option to disable endpoint TLS certificate verification 
+
 ## [0.5.0][] - 2022-12-23
 
 [0.5.0]: https://github.com/chaostoolkit/chaostoolkit-prometheus/compare/0.4.0...0.5.0
