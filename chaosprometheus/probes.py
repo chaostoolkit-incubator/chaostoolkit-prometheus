@@ -50,10 +50,10 @@ def query(
     logger.debug("Querying with: {q}".format(q=params))
 
     r = requests.get(
-        url, 
-        headers={"Accept": "application/json"}, 
-        params=params, 
-        verify=verify_tls
+        url,
+        headers={"Accept": "application/json"},
+        params=params,
+        verify=verify_tls,
     )
 
     if r.status_code != 200:
@@ -108,10 +108,10 @@ def query_interval(
     logger.debug("Querying with: {q}".format(q=params))
 
     r = requests.get(
-        url, 
-        headers={"Accept": "application/json"}, 
-        params=params, 
-        verify=verify_tls
+        url,
+        headers={"Accept": "application/json"},
+        params=params,
+        verify=verify_tls,
     )
 
     if r.status_code != 200:

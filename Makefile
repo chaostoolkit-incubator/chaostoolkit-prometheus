@@ -14,7 +14,7 @@ build:
 
 .PHONY: lint
 lint:
-	flake8 chaosprometheus/ tests/
+	ruff chaosprometheus/ tests/
 	isort --check-only --profile black chaosprometheus/ tests/
 	black --check --diff --line-length=80 chaosprometheus/ tests/
 
@@ -22,6 +22,7 @@ lint:
 format:
 	isort --profile black chaosprometheus/ tests/
 	black --line-length=80 chaosprometheus/ tests/
+	ruff chaosprometheus/ tests/ --fix
 
 .PHONY: tests
 tests:

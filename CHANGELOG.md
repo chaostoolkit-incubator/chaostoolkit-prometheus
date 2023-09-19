@@ -8,6 +8,10 @@
 
 - Option to disable endpoint TLS certificate verification 
 
+### Changed
+
+- Switched to `ruff` away from `flake8`
+
 ## [0.5.0][] - 2022-12-23
 
 [0.5.0]: https://github.com/chaostoolkit/chaostoolkit-prometheus/compare/0.4.0...0.5.0

@@ -5,4 +5,4 @@ pytest-cov
 pytest-sugar
 black
 isort
-flake8
+ruff
