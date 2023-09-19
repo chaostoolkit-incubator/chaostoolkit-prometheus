@@ -26,6 +26,16 @@ $ pip install chaostoolkit-prometheus
 To use this package, you must create have access to a Prometheus instance via
 HTTP and be allowed to connect to it.
 
+By default, the Prometheus instance at `http://localhost:9090` will be queried.
+To override, you need to set up the instance details using the `prometheus_base_url`
+configuration property:
+
+```json
+"configuration": {
+  "prometheus_base_url": "http://my.prometheus.server/"
+}
+```
+
 This package only exports probes to query for some aspects of your system as
 monitored by Prometheus.
 
