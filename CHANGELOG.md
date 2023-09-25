@@ -4,6 +4,17 @@
 
 [Unreleased]: https://github.com/chaostoolkit/chaostoolkit-prometheus/compare/0.6.0...HEAD
 
+### Added
+
+- Add new `verify_tls` flag for the control to disable/enable the verification of TLS certificates
+
+### Changed
+
+- Implemented a custom handler for the prometheus `push_to_gateway` function that uses `requests`.
+  This enables features like the use of HTTP proxies.
+- Allow setting of `experiment_ref`, `trace_id`, `pushgateway_url` and `verify_tls` through a
+  `configuration` block. Direct configuration through arguments is still possible.
+
 ## [0.6.0][] - 2023-09-19
 
 [0.6.0]: https://github.com/chaostoolkit/chaostoolkit-prometheus/compare/0.5.0...0.6.0
